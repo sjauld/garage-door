@@ -3,6 +3,19 @@ from flask import Flask
 import pigpio
 import time
 import authentication
+import os
+
+try:
+   os.environ["GARAGE_HOST"]
+except KeyError:
+   print "Please set the environment variable GARAGE_HOST"
+   sys.exit(1)
+
+try:
+    os.environ["GARAGE_PORT"]
+except KeyError:
+    print "Please set the environment variable GARAGE_PORT"
+    sys.exit(1)
 
 pi = pigpio.pi()
 
@@ -17,4 +30,4 @@ def hello():
     return "Garage button pressed!"
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80)
+    app.run(host=os.environ["GARAGE_HOST"], port=os.environ["GARAGE_PORT"])

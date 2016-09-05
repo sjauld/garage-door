@@ -2,6 +2,12 @@ from functools import wraps
 from flask import request, Response
 import os
 
+try:
+   os.environ["GARAGE_PASSWORD"]
+except KeyError:
+   print "Please set the environment variable GARAGE_PASSWORD"
+   sys.exit(1)
+
 def check_auth(username, password):
     """This function is called to check if a username /
     password combination is valid.
