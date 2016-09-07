@@ -1,5 +1,6 @@
 # main.py
 from flask import Flask
+from flask import request
 import pigpio
 import time
 import authentication
@@ -22,11 +23,18 @@ pi = pigpio.pi()
 app = Flask(__name__)
 
 @app.route("/")
+def status():
+    return "The server is UP!"
+
+@app.route("/press")
 @authentication.requires_auth
-def hello():
-    pi.write(25,1)
+def actuate():
+    pin = request.args.get('pin')
+    if pin is None:
+        return "Please provide a pin", 400
+    pi.write(pin,1)
     time.sleep(0.2)
-    pi.write(25,0)
+    pi.write(pin,0)
     return "Garage button pressed!"
 
 if __name__ == "__main__":
