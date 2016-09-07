@@ -29,7 +29,7 @@ def status():
 @app.route("/pi")
 @authentication.requires_auth
 def handler():
-    pin = int(request.args.get('pin'))
+    pin = request.args.get('pin')
     action = request.args.get('action')
     mode = request.args.get('mode')
     if pin is None:
@@ -40,9 +40,9 @@ def handler():
         if mode is None:
             return "Pin {} (fake) pressed!".format(pin)
         elif mode is 'realz':
-            pi.write(pin,1)
+            pi.write(int(pin),1)
             time.sleep(0.2)
-            pi.write(pin,0)
+            pi.write(int(pin),0)
             return "Pin {} pressed for realz!".format(pin)
         else:
             return "Bad mode selected", 400
