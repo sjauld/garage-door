@@ -29,7 +29,7 @@ def status():
 @app.route("/press")
 @authentication.requires_auth
 def actuate():
-    pin = request.args.get('pin')
+    pin = int(request.args.get('pin'))
     if pin is None:
         return "Please provide a pin", 400
     pi.write(pin,1)
