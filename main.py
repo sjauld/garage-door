@@ -35,7 +35,7 @@ def handler():
     if pin is None:
         return "Please select a pin", 400
     if action is None:
-        return "Pin {} selected. <a href='/pi?pin={}&action=press'>Would you like to press this pin?</a>".format(pin)
+        return "Pin {} selected. <a href='/pi?pin={}&action=press'>Would you like to press this pin?</a>".format(pin, pin)
     elif action is 'press':
         if mode is None:
             return "Pin {} (fake) pressed!".format(pin)
