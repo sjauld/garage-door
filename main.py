@@ -31,21 +31,15 @@ def status():
 def handler():
     pin = request.args.get('pin')
     action = request.args.get('action')
-    mode = request.args.get('mode')
     if pin is None:
         return "Please select a pin", 400
     if action is None:
         return "Pin {} selected. <a href='/pi?pin={}&action=press'>Would you like to press this pin?</a>".format(pin, pin)
     elif action == 'press':
-        if mode is None:
-            return "Pin {} (fake) pressed!".format(pin)
-        elif mode == 'realz':
-            pi.write(int(pin),1)
-            time.sleep(0.2)
-            pi.write(int(pin),0)
-            return "Pin {} pressed for realz!".format(pin)
-        else:
-            return "Bad mode selected", 400
+        pi.write(int(pin),1)
+        time.sleep(0.2)
+        pi.write(int(pin),0)
+        return "Pin {} pressed!".format(pin)
     else:
         return "Bad action selected", 400
 
