@@ -36,10 +36,10 @@ def handler():
         return "Please select a pin", 400
     if action is None:
         return "Pin {} selected. <a href='/pi?pin={}&action=press'>Would you like to press this pin?</a>".format(pin, pin)
-    elif action is 'press':
+    elif action == 'press':
         if mode is None:
             return "Pin {} (fake) pressed!".format(pin)
-        elif mode is 'realz':
+        elif mode == 'realz':
             pi.write(int(pin),1)
             time.sleep(0.2)
             pi.write(int(pin),0)
